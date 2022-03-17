@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using SistemaPrimaria.Models;
 
 namespace SistemaPrimaria.Controllers
 {
+    [Authorize]
     public class EstudiantesController : Controller
     {
         private readonly SistemaPrimariaDB _context;
@@ -18,7 +20,7 @@ namespace SistemaPrimaria.Controllers
         {
             _context = context;
         }
-
+        
         // GET: Estudiantes
         public async Task<IActionResult> Index()
         {
