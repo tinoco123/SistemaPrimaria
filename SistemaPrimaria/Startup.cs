@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SistemaPrimaria.Data;
 
 namespace SistemaPrimaria
 {
@@ -25,6 +27,9 @@ namespace SistemaPrimaria
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddDbContext<SistemaPrimariaContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SistemaPrimariaContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
