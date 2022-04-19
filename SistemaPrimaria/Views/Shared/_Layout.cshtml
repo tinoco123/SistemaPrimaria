@@ -28,81 +28,57 @@
     </header>
     <div class="sidebar">
         <div class="logo-details">
-            <i class='bx bxl-c-plus-plus icon'></i>
-            <div class="logo_name">CodingLab</div>
+            
+            <div class="logo_name">SistemaPrimaria</div>
             <i class='bx bx-menu' id="btn"></i>
         </div>
         <ul class="nav-list">
+
             <li>
-                <i class='bx bx-search'></i>
-                <input type="text" placeholder="Search...">
-                <span class="tooltip">Search</span>
+                <a asp-controller="Estudiantes" asp-action="Index">
+                    <i class='bx bxs-user-circle'></i>
+                    <span class="links_name">Alumnos</span>
+                </a>
+                <span class="tooltip">Alumnos</span>
+            </li>
+            <li>
+                <a asp-controller="Materias" asp-action="Index">
+                    <i class='bx bx-book-open'></i>
+                    <span class="links_name">Materias</span>
+                </a>
+                <span class="tooltip">Materias</span>
             </li>
             <li>
                 <a href="#">
-                    <i class='bx bx-grid-alt'></i>
-                    <span class="links_name">Dashboard</span>
+                    <i class='bx bx-group'></i>
+                    <span class="links_name">Grupos</span>
                 </a>
-                <span class="tooltip">Dashboard</span>
+                <span class="tooltip">Grupos</span>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bx-user'></i>
-                    <span class="links_name">User</span>
+                <a asp-controller="Calificaciones" asp-action="Index">
+                    <i class='bx bx-notepad'></i>
+                    <span class="links_name">Calificaciones</span>
                 </a>
-                <span class="tooltip">User</span>
+                <span class="tooltip">Calificaciones</span>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bx-chat'></i>
-                    <span class="links_name">Messages</span>
+                <a asp-controller="Maestros" asp-action="Index">
+                    <i class='bx bx-user-pin'></i>
+                    <span class="links_name">Maestros</span>
                 </a>
-                <span class="tooltip">Messages</span>
+                <span class="tooltip">Maestros</span>
             </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Analytics</span>
-                </a>
-                <span class="tooltip">Analytics</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-folder'></i>
-                    <span class="links_name">File Manager</span>
-                </a>
-                <span class="tooltip">Files</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-cart-alt'></i>
-                    <span class="links_name">Order</span>
-                </a>
-                <span class="tooltip">Order</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-heart'></i>
-                    <span class="links_name">Saved</span>
-                </a>
-                <span class="tooltip">Saved</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-cog'></i>
-                    <span class="links_name">Setting</span>
-                </a>
-                <span class="tooltip">Setting</span>
-            </li>
+            
             <li class="profile">
-                <div class="profile-details">
-                    <!--<img src="profile.jpg" alt="profileImg">-->
-                    <div class="name_job">
-                        <div class="name">Prem Shahi</div>
-                        <div class="job">Web designer</div>
-                    </div>
+            <div class="profile-details">
+                <div class="name_job">
+                    <div class="name">Sistema Primaria</div>
+                    <div class="job">Enjoy!</div>
                 </div>
-                <i class='bx bx-log-out' id="log_out"></i>
+            </div>
+            <i class='bx bxs-book-content' id="log_out"></i>
+            
             </li>
         </ul>
     </div>

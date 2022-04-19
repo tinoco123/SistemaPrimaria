@@ -10,11 +10,11 @@ using SistemaPrimaria.Models;
 
 namespace SistemaPrimaria.Controllers
 {
-    public class MaestroesController : Controller
+    public class MaestrosController : Controller
     {
         private readonly SistemaPrimariaContext _context;
 
-        public MaestroesController(SistemaPrimariaContext context)
+        public MaestrosController(SistemaPrimariaContext context)
         {
             _context = context;
         }

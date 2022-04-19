@@ -10,11 +10,11 @@ using SistemaPrimaria.Models;
 
 namespace SistemaPrimaria.Controllers
 {
-    public class CalificacionsController : Controller
+    public class CalificacionesController : Controller
     {
         private readonly SistemaPrimariaContext _context;
 
-        public CalificacionsController(SistemaPrimariaContext context)
+        public CalificacionesController(SistemaPrimariaContext context)
         {
             _context = context;
         }
