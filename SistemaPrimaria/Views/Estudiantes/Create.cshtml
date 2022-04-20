@@ -5,53 +5,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Agregar un estudiante</h1>
 
-<h4>Estudiante</h4>
+<h4>Apartado para agregar estudiantes</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Matricula" class="control-label"></label>
+                <label asp-for="Matricula" class="control-label"><strong>Matricula:</strong></label>
                 <input asp-for="Matricula" class="form-control" />
                 <span asp-validation-for="Matricula" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
+                <label asp-for="Nombre" class="control-label"><strong>Nombre:</strong></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ApellidoMaterno" class="control-label"></label>
+                <label asp-for="ApellidoMaterno" class="control-label"><strong>Apellido Materno:</strong></label>
                 <input asp-for="ApellidoMaterno" class="form-control" />
                 <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ApellidoPaterno" class="control-label"></label>
+                <label asp-for="ApellidoPaterno" class="control-label"><strong>Apellido Paterno:</strong></label>
                 <input asp-for="ApellidoPaterno" class="form-control" />
                 <span asp-validation-for="ApellidoPaterno" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
+                <label asp-for="Telefono" class="control-label"><strong>Teléfono:</strong></label>
                 <input asp-for="Telefono" class="form-control" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
+                <label asp-for="Direccion" class="control-label"><strong>Dirección:</strong></label>
                 <input asp-for="Direccion" class="form-control" />
                 <span asp-validation-for="Direccion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Agregar Estudiante" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Ver la lista de todos los estudiantes</a>
 </div>
 
 @section Scripts {

@@ -5,31 +5,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Lista de estudiantes</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Agregar estudiante</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Matricula)
+                <strong>Matricula</strong>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                <strong>Nombre</strong>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApellidoMaterno)
+                <strong>Apellido Materno</strong>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApellidoPaterno)
+                <strong>Apellido Paterno</strong>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefono)
+                <strong>Teléfono</strong>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Direccion)
+                <strong>Dirección</strong>
             </th>
             <th></th>
         </tr>
@@ -56,9 +56,8 @@
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
             </td>
         </tr>
 }
