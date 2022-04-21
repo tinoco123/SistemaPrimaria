@@ -7,6 +7,12 @@ namespace SistemaPrimaria.Models
 {
     public class Grupo
     {
+        public int Id { get; set; }
+        public int Grado { get; set; }
+        public string NombreGrupo { get; set; }
+        public int IdMaestro { get; set; }
+
+
 
     }
 }
