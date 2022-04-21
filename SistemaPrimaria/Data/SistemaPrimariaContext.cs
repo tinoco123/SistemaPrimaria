@@ -21,5 +21,7 @@ namespace SistemaPrimaria.Data
         public DbSet<SistemaPrimaria.Models.Maestro> Maestro { get; set; }
 
         public DbSet<SistemaPrimaria.Models.Calificacion> Calificacion { get; set; }
+
+        public DbSet<SistemaPrimaria.Models.Grupo> Grupo { get; set; }
     }
 }
