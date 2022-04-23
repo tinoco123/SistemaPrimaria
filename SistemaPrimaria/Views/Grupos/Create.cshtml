@@ -4,38 +4,38 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Agregar un grupo</h1>
 
-<h4>Grupo</h4>
+<h4>Apartado para agregar un grupo</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Grado" class="control-label"></label>
+                <label asp-for="Grado" class="control-label"><strong>Grado:</strong></label>
                 <input asp-for="Grado" class="form-control" />
                 <span asp-validation-for="Grado" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NombreGrupo" class="control-label"></label>
+                <label asp-for="NombreGrupo" class="control-label"><strong>Nombre del grupo:</strong></label>
                 <input asp-for="NombreGrupo" class="form-control" />
                 <span asp-validation-for="NombreGrupo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdMaestro" class="control-label"></label>
+                <label asp-for="IdMaestro" class="control-label"><strong>ID del maestro:</strong></label>
                 <input asp-for="IdMaestro" class="form-control" />
                 <span asp-validation-for="IdMaestro" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Agregar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver a la lista</a>
 </div>
 
 @section Scripts {
