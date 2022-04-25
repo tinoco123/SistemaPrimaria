@@ -14,17 +14,17 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="calificacion" class="control-label">Calificación:</label>
+                <label asp-for="calificacion" class="control-label"><strong>Calificación:</strong></label>
                 <input asp-for="calificacion" class="form-control" />
                 <span asp-validation-for="calificacion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdEstudiante" class="control-label">Selecciona el Alumno:</label>
+                <label asp-for="IdEstudiante" class="control-label"><strong>Selecciona el Alumno:</strong></label>
                 <input asp-for="IdEstudiante" class="form-control" />
                 <span asp-validation-for="IdEstudiante" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdMateria" class="control-label">Selecciona la materia:</label>
+                <label asp-for="IdMateria" class="control-label"><strong>Selecciona la materia:</strong></label>
                 <input asp-for="IdMateria" class="form-control" />
                 <span asp-validation-for="IdMateria" class="text-danger"></span>
             </div>

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Inicio</h1>
+<h1>Lista de grupos</h1>
 
 <p>
     <a asp-action="Create">Agregar un nuevo grupo</a>
@@ -19,7 +19,7 @@
                 <strong>Nombre del grupo:</strong>
             </th>
             <th>
-                <strong>ID del maestro:</strong>
+                <strong>Maestro asignado:</strong>
             </th>
             <th></th>
         </tr>
@@ -38,7 +38,6 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Información</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
             </td>
         </tr>
