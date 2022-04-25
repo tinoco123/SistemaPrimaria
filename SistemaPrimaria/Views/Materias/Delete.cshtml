@@ -5,15 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Eliminar</h1>
 
-<h3>Esta seguro que desea eliminar esta materia?</h3>
+
+<h3>¿Estás seguro de que deseas eliminar esta materia?</h3>
 <div>
-    <h4>Materia</h4>
+    <h5>Datos de la materia</h5>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
+            <strong>Nombre:</strong>
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Nombre)
@@ -22,7 +22,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
         <a asp-action="Index">Volver a la lista</a>
     </form>
 </div>

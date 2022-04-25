@@ -8,7 +8,7 @@
 <h1>Lista de materias vigentes</h1>
 
 <p>
-    <a asp-action="Create">Agregar nueva materia</a>
+    <a asp-action="Create">Agregar una nueva materia</a>
 </p>
 <table class="table">
     <thead>
@@ -26,9 +26,8 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                <a asp-action="Editar" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Información" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Eliminar" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
             </td>
         </tr>
 }

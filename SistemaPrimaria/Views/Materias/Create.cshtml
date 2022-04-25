@@ -5,21 +5,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Agregar una nueva asignación</h1>
+<h1>Agregar una nueva Materia</h1>
 
-<h4>Apartado para agregar una materia</h4>
+<h4>Apartado para agregar materias</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Agregar">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
+                <label asp-for="Nombre" class="control-label"><strong>Nombre:</strong></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Agregar materia" class="btn btn-primary" />
             </div>
         </form>
     </div>
