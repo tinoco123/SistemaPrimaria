@@ -33,7 +33,13 @@
             <i class='bx bx-menu' id="btn"></i>
         </div>
         <ul class="nav-list">
-
+            <li>
+                <a asp-controller="Home" asp-action="Index">
+                    <i class='bx bxs-home-heart'></i>
+                    <span class="links_name">Inicio</span>
+                </a>
+                <span class="tooltip">Inicio</span>
+            </li>
             <li>
                 <a asp-controller="Estudiantes" asp-action="Index">
                     <i class='bx bxs-user-circle'></i>
@@ -69,16 +75,16 @@
                 </a>
                 <span class="tooltip">Maestros</span>
             </li>
-            
+
             <li class="profile">
-            <div class="profile-details">
-                <div class="name_job">
-                    <div class="name">Sistema Primaria</div>
-                    <div class="job">Enjoy!</div>
+                <div class="profile-details">
+                    <div class="name_job">
+                        <div class="name">Sistema Primaria</div>
+                        <div class="job">Enjoy!</div>
+                    </div>
                 </div>
-            </div>
-            <i class='bx bxs-book-content' id="log_out"></i>
-            
+                <i class='bx bxs-book-content' id="log_out"></i>
+
             </li>
         </ul>
     </div>
