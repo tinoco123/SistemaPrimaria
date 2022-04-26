@@ -1,6 +1,6 @@
 ﻿/* Styling the main page*/
 
-.container {
+.containerIndex {
     margin: auto;
     background-color: white;
     width: 800px;
@@ -14,7 +14,7 @@ ul, li {
 }
 
     ul.slider {
-        position: relative;
+        position: center;
         width: 800px;
         height: 300px;
     }
@@ -45,24 +45,4 @@ ul, li {
                 opacity: 1;
             }
 
-.menu {
-    text-align: center;
-    margin: 20px;
-}
 
-    .menu li {
-        display: inline-block;
-        text-align: center;
-    }
-
-        .menu li a {
-            display: inline-block;
-            color: white;
-            text-decoration: none;
-            background-color: grey;
-            padding: 10px;
-            width: 20px;
-            height: 20px;
-            font-size: 20px;
-            border-radius: 100%;
-        }
