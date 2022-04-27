@@ -5,18 +5,9 @@ using System.Threading.Tasks;
 
 namespace SistemaPrimaria.Models
 {
-    public class Grupo
+    public class GrupoViewModel
     {
-        
         public int Id { get; set; }
-     
         public string NombreGrupo { get; set; }
-        public int IdMaestro { get; set; }
-
-
-        public Grupo()
-        {
-
-        }
     }
 }

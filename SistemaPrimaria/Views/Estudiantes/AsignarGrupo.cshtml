@@ -1,0 +1,58 @@
+﻿@model SistemaPrimaria.Models.GrupoEstudiante
+@{
+    ViewData["Title"] = "Asignar a un grupo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SelectListItem> grupos = (List<SelectListItem>)ViewBag.grupos;
+    Estudiante estudiante = ViewBag.estudiante;
+}
+
+
+<h1>Asignar un estudiante a un grupo</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <h5>Datos del alumno:</h5>
+        
+        <div>
+            <p>
+                <strong>Matricula:</strong>
+                @estudiante.Matricula
+            <p />
+
+            <p>
+                <strong>Nombre completo:</strong>
+                @estudiante.Nombre @estudiante.ApellidoPaterno @estudiante.ApellidoMaterno
+            </p>
+        </div>
+            
+            
+            
+        
+        <form asp-action="AsignarGrupo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <strong>Lista de grupos</strong>
+                @Html.DropDownList("IdGrupo", grupos, "Selecciona el grupo", new { @class = "form-control" })
+                <span asp-validation-for="IdGrupo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="IdEstudiante" class="form-control" value="@estudiante.Id" name="IdEstudiante" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Asignar a grupo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Volver a la lista</a>
+</div>
+
+@section Scripts {s
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

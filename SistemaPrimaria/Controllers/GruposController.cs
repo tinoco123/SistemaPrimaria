@@ -54,7 +54,7 @@ namespace SistemaPrimaria.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Grado,NombreGrupo,IdMaestro")] Grupo grupo)
+        public async Task<IActionResult> Create([Bind("Id,NombreGrupo,IdMaestro")] Grupo grupo)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace SistemaPrimaria.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Grado,NombreGrupo,IdMaestro")] Grupo grupo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NombreGrupo,IdMaestro")] Grupo grupo)
         {
             if (id != grupo.Id)
             {

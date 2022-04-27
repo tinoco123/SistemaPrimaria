@@ -25,8 +25,10 @@ namespace SistemaPrimaria.Controllers
             return View(await _context.Estudiante.ToListAsync());
         }
 
-        // GET: Estudiantes/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+
+        // GET: Estudiantes/AsjgnarGrupo/5
+        public async Task<IActionResult> AsignarGrupo(int? id)
         {
             if (id == null)
             {
@@ -39,8 +41,69 @@ namespace SistemaPrimaria.Controllers
             {
                 return NotFound();
             }
+            List<GrupoViewModel> listaGrupos = null;
 
-            return View(estudiante);
+            listaGrupos = (from data in _context.Grupo
+                           select new GrupoViewModel
+                           {
+                               Id = data.Id,
+                               NombreGrupo = data.NombreGrupo
+                           }).ToList();
+
+
+            List<SelectListItem> grupos = listaGrupos.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.NombreGrupo.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            ViewBag.grupos = grupos;
+            ViewBag.estudiante = estudiante;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AsignarGrupo( int IdGrupo, int IdEstudiante)
+        {
+            
+            
+            List<GrupoViewModel> listaGrupos = null;
+
+            listaGrupos = (from data in _context.Grupo
+                           select new GrupoViewModel
+                           {
+                               Id = data.Id,
+                               NombreGrupo = data.NombreGrupo
+                           }).ToList();
+
+
+            List<SelectListItem> grupos = listaGrupos.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.NombreGrupo.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = true
+                };
+            });
+
+            GrupoEstudiante grupoEstudiante = new GrupoEstudiante();
+            
+            grupoEstudiante.IdEstudiante = IdEstudiante;
+            grupoEstudiante.IdGrupo = IdGrupo;
+            
+            int id_estudiante = IdEstudiante;
+            int id_grupo = IdGrupo;
+
+            _context.GrupoEstudiante.Add(grupoEstudiante);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+            
+            
         }
 
         // GET: Estudiantes/Create
