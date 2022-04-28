@@ -1,0 +1,53 @@
+﻿@model SistemaPrimaria.Models.GrupoMateria
+@{
+    ViewData["Title"] = "Asignar materias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<SelectListItem> materias = (List<SelectListItem>)ViewBag.materias;
+    Grupo grupo = ViewBag.grupo;
+}
+
+<h1>Asignar las materias del grupo</h1>
+
+<hr />
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h5>Datos del grupo:</h5>
+
+        <div>
+            <p>
+                <strong>Nombre del grupo:</strong>
+                @grupo.NombreGrupo
+            <p />
+        </div>
+
+
+
+
+        <form asp-action="AsignarMaterias">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <strong>Lista de materias</strong>
+                @Html.DropDownList("IdMateria", materias, "Selecciona la materia", new { @class = "form-control" })
+                <span asp-validation-for="IdMateria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="IdGrupo" class="form-control" value="@grupo.Id" name="IdGrupo" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Asignar la materia" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Volver a la lista</a>
+</div>
+
+@section Scripts {s
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

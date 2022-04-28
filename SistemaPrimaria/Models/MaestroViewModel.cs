@@ -5,19 +5,10 @@ using System.Threading.Tasks;
 
 namespace SistemaPrimaria.Models
 {
-    public class GrupoMateria
+    public class MaestroViewModel
     {
-
-        public GrupoMateria()
-        {
-
-        }
-
         public int Id { get; set; }
+        public string Cedula { get; set; }
 
-        public int IdGrupo { get; set; }
-
-        public int IdMateria {get; set;}
-    
     }
 }
