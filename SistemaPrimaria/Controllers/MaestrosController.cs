@@ -33,9 +33,20 @@ namespace SistemaPrimaria.Controllers
                 datosMaestro.Add(maestro.ApellidoPaterno);
                 datosMaestro.Add(maestro.Telefono);
                 datosMaestro.Add(maestro.Direccion);
-                datosMaestro.Add((from l in _context.Grupo
-                                  where l.IdMaestro == maestro.Id
-                                  select l.NombreGrupo).ToList()[0]);
+                var nombreGrupo = (from l in _context.Grupo
+                                   where l.IdMaestro == maestro.Id
+                                   select l.NombreGrupo).ToList();
+                if (nombreGrupo.Count == 0)
+                {
+                    datosMaestro.Add("Sin grupo");
+                }
+                else
+                {
+                    datosMaestro.Add((from l in _context.Grupo
+                                      where l.IdMaestro == maestro.Id
+                                      select l.NombreGrupo).ToList()[0]);
+                }
+                
                 
                 datosMaestros.Add(datosMaestro);
             }
