@@ -96,9 +96,7 @@ namespace SistemaPrimaria.Controllers
             grupoEstudiante.IdEstudiante = IdEstudiante;
             grupoEstudiante.IdGrupo = IdGrupo;
             
-            int id_estudiante = IdEstudiante;
-            int id_grupo = IdGrupo;
-
+            
             _context.GrupoEstudiante.Add(grupoEstudiante);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
