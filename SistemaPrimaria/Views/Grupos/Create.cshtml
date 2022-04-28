@@ -1,7 +1,8 @@
 ﻿@model SistemaPrimaria.Models.Grupo
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Agregar grupo";
+    List<SelectListItem> maestros = (List<SelectListItem>)ViewBag.maestros;
 }
 
 <h1>Agregar un nuevo grupo</h1>
@@ -19,12 +20,12 @@
                 <span asp-validation-for="NombreGrupo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdMaestro" class="control-label"><strong>Maestro Asignado:</strong></label>
-                <input asp-for="IdMaestro" class="form-control" />
+                <strong>Lista de maestros</strong>
+                @Html.DropDownList("IdMaestro", maestros, "Selecciona el maestro", new { @class = "form-control" })
                 <span asp-validation-for="IdMaestro" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Agregar maestro" class="btn btn-primary" />
+                <input type="submit" value="Agregar grupo" class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -42,6 +42,26 @@ namespace SistemaPrimaria.Controllers
         // GET: Grupos/Create
         public IActionResult Create()
         {
+            List<MaestroViewModel> listaMaestros = null;
+
+            listaMaestros = (from data in _context.Maestro
+                           select new MaestroViewModel
+                           {
+                               Id = data.Id,
+                               Cedula = data.Cedula
+                           }).ToList();
+
+
+            List<SelectListItem> maestros = listaMaestros.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Cedula.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+            ViewBag.maestros = maestros;
             return View();
         }
 
@@ -50,15 +70,37 @@ namespace SistemaPrimaria.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NombreGrupo,IdMaestro")] Grupo grupo)
+        public async Task<IActionResult> Create(string nombreGrupo, int idMaestro)
         {
-            if (ModelState.IsValid)
+            List<MaestroViewModel> listaMaestros = null;
+
+            listaMaestros = (from data in _context.Maestro
+                             select new MaestroViewModel
+                             {
+                                 Id = data.Id,
+                                 Cedula = data.Cedula
+                             }).ToList();
+
+
+            List<SelectListItem> maestros = listaMaestros.ConvertAll(d =>
             {
-                _context.Add(grupo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(grupo);
+                return new SelectListItem()
+                {
+                    Text = d.Cedula.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            Grupo grupo = new Grupo();
+            grupo.NombreGrupo = nombreGrupo;
+            grupo.IdMaestro = idMaestro;
+
+            _context.Add(grupo);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));    
+            
+            
         }
 
         // GET: Grupos/Edit/5
