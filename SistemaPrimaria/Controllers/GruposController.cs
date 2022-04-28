@@ -25,24 +25,6 @@ namespace SistemaPrimaria.Controllers
             return View(await _context.Grupo.ToListAsync());
         }
 
-        // GET: Grupos/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var grupo = await _context.Grupo
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (grupo == null)
-            {
-                return NotFound();
-            }
-
-            return View(grupo);
-        }
-
         // GET: Grupos/Create
         public IActionResult Create()
         {
@@ -114,6 +96,90 @@ namespace SistemaPrimaria.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(grupo);
+        }
+
+        // GET: Grupos/AsignarMaterias/5
+        public async Task<IActionResult> AsignarMaterias(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var grupo = await _context.Grupo.FindAsync(id);
+            if (grupo == null)
+            {
+                return NotFound();
+            }
+
+
+            //Materias
+            List<MateriasViewModel> listaMaterias = null;
+
+            listaMaterias = (from data in _context.Materia
+                             select new MateriasViewModel
+                             {
+                                 Id = data.Id,
+                                 Nombre = data.Nombre
+                             }).ToList();
+
+
+            List<SelectListItem> materias = listaMaterias.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Nombre.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            
+
+            ViewBag.materias = materias;
+            ViewBag.grupo = grupo;
+
+            return View();
+
+
+        }
+
+        // POST: Grupos/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AsignarMaterias(int IdGrupo, int IdMateria)
+        {
+            //Materias
+            List<MateriasViewModel> listaMaterias = null;
+
+            listaMaterias = (from data in _context.Materia
+                             select new MateriasViewModel
+                             {
+                                 Id = data.Id,
+                                 Nombre = data.Nombre
+                             }).ToList();
+
+
+            List<SelectListItem> materias = listaMaterias.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Nombre.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            
+
+            GrupoMateria grupoMateria = new GrupoMateria();
+            grupoMateria.IdGrupo = IdGrupo;
+            grupoMateria.IdMateria = IdMateria;
+            _context.GrupoMateria.Add(grupoMateria);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Grupos/Delete/5
