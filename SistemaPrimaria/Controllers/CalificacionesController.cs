@@ -30,7 +30,55 @@ namespace SistemaPrimaria.Controllers
         // GET: Calificacions/Create
         public IActionResult Create()
         {
+            //Estudiantes
+            List<EstudianteViewModel> listaEstudiantes = null;
+
+            listaEstudiantes = (from data in _context.Estudiante
+                           select new EstudianteViewModel
+                           {
+                               Id = data.Id,
+                               Matricula = data.Matricula
+                           }).ToList();
+
+
+            List<SelectListItem> estudiantes = listaEstudiantes.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Matricula.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            ViewBag.estudiantes = estudiantes;
+
+            //Materias
+            List<MateriasViewModel> listaMaterias = null;
+
+            listaMaterias = (from data in _context.Materia
+                                select new MateriasViewModel
+                                {
+                                    Id = data.Id,
+                                    Nombre = data.Nombre
+                                }).ToList();
+
+
+            List<SelectListItem> materias = listaMaterias.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Nombre.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            ViewBag.materias = materias;
+
+
             return View();
+
         }
 
         // POST: Calificacions/Create
@@ -38,16 +86,69 @@ namespace SistemaPrimaria.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,calificacion,IdEstudiante,IdMateria")] Calificacion calificacion)
+        public async Task<IActionResult> Create(int calificacion, int idEstudiante, int idMateria )
         {
-            if (ModelState.IsValid)
+            //Estudiante
+
+
+            List<EstudianteViewModel> listaEstudiantes = null;
+
+            listaEstudiantes = (from data in _context.Estudiante
+                                select new EstudianteViewModel
+                                {
+                                    Id = data.Id,
+                                    Matricula = data.Matricula
+                                }).ToList();
+
+
+            List<SelectListItem> estudiantes = listaEstudiantes.ConvertAll(d =>
             {
-                _context.Add(calificacion);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(calificacion);
+                return new SelectListItem()
+                {
+                    Text = d.Matricula.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            ViewBag.estudiantes = estudiantes;
+
+            //Materias
+            List<MateriasViewModel> listaMaterias = null;
+
+            listaMaterias = (from data in _context.Materia
+                             select new MateriasViewModel
+                             {
+                                 Id = data.Id,
+                                 Nombre = data.Nombre
+                             }).ToList();
+
+
+            List<SelectListItem> materias = listaMaterias.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Nombre.ToString(),
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            ViewBag.materias = materias;
+
+
+            Calificacion calificaciones = new Calificacion();
+            calificaciones.IdEstudiante = idEstudiante;
+            calificaciones.IdMateria = idMateria;
+            calificaciones.calificacion = calificacion;
+
+            
+            _context.Calificacion.Add(calificaciones);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Create));
+            
         }
+
 
         
 
