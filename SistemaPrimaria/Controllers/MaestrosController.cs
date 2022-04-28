@@ -22,7 +22,26 @@ namespace SistemaPrimaria.Controllers
         // GET: Maestroes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Maestro.ToListAsync());
+            List<Maestro> maestros = await _context.Maestro.ToListAsync();
+            List<List<string>> datosMaestros = new List<List<string>>();
+            foreach (var maestro in maestros)
+            {
+                List<string> datosMaestro = new List<string>();
+                datosMaestro.Add(maestro.Cedula);
+                datosMaestro.Add(maestro.Nombre);
+                datosMaestro.Add(maestro.ApellidoMaterno);
+                datosMaestro.Add(maestro.ApellidoPaterno);
+                datosMaestro.Add(maestro.Telefono);
+                datosMaestro.Add(maestro.Direccion);
+                datosMaestro.Add((from l in _context.Grupo
+                                  where l.IdMaestro == maestro.Id
+                                  select l.NombreGrupo).ToList()[0]);
+                
+                datosMaestros.Add(datosMaestro);
+            }
+            ViewBag.datosMaestros = datosMaestros;
+            ViewBag.maestros = maestros;
+            return View();
         }
 
         // GET: Maestroes/Details/5
