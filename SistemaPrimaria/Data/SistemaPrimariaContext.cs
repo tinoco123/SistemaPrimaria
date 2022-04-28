@@ -25,5 +25,9 @@ namespace SistemaPrimaria.Data
         public DbSet<SistemaPrimaria.Models.Grupo> Grupo { get; set; }
         
         public DbSet<SistemaPrimaria.Models.GrupoEstudiante> GrupoEstudiante { get; set; }
+
+        public DbSet<SistemaPrimaria.Models.GrupoMateria> GrupoMateria { get; set; }
+
+
     }
 }

@@ -1,0 +1,80 @@
+﻿
+
+@{
+    ViewData["Title"] = "Boleta de calificaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Grupo grupo = ViewBag.grupo;
+    Estudiante estudiante = ViewBag.estudiante;
+    List<Materia> ListMaterias = (List<Materia>)ViewBag.materia;
+    List<int> calificaciones = (List<int>)ViewBag.calificaciones;
+}
+
+<h1>Boleta de calificaciones</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+
+        <p>
+
+            <strong> Nombre Alumno </strong>
+            @estudiante.Nombre @estudiante.ApellidoPaterno @estudiante.ApellidoMaterno
+
+        </p>
+        <p>
+            <strong> Grupo </strong>
+            @grupo.NombreGrupo
+        </p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <strong>Nombre de Materia </strong>
+                    </th>
+                    <th>
+                        <strong>Calificación</strong>
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (Materia item in ListMaterias)
+                {
+                    <tr>
+                        <td>
+                            @item.Nombre
+                        </td>
+
+                    </tr>
+                }
+
+                @foreach (int calificacion in calificaciones)
+                {
+                    <tr>
+                        <td>
+                            @calificacion 
+                        </td>
+
+                    </tr>
+                }
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Volver a la lista</a>
+</div>
+
+@section Scripts {s
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

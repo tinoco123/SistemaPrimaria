@@ -27,7 +27,7 @@ namespace SistemaPrimaria.Controllers
 
 
 
-        // GET: Estudiantes/AsjgnarGrupo/5
+        // GET: Estudiantes/AsignarGrupo/5
         public async Task<IActionResult> AsignarGrupo(int? id)
         {
             if (id == null)
@@ -41,6 +41,7 @@ namespace SistemaPrimaria.Controllers
             {
                 return NotFound();
             }
+
             List<GrupoViewModel> listaGrupos = null;
 
             listaGrupos = (from data in _context.Grupo
@@ -210,5 +211,100 @@ namespace SistemaPrimaria.Controllers
         {
             return _context.Estudiante.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> Boleta(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var estudiante = await _context.Estudiante
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (estudiante == null)
+            {
+                return NotFound();
+            }
+
+
+            //Consultar el id al que pertenece el estudiante 
+
+            var grupo = (from l in _context.GrupoEstudiante
+                         where l.IdEstudiante == id
+                         select l.IdGrupo).ToList();
+           
+           
+                int idGrupo = grupo[0];
+           
+
+           
+
+            var grupoSelected = await _context.Grupo
+                .FirstOrDefaultAsync(m => m.Id == idGrupo);
+
+          
+
+
+            //consultar las materias de un alumno
+            var materias = (from l in _context.GrupoMateria
+                            where l.IdGrupo == idGrupo
+                            select l.IdMateria).ToList();
+
+            List<Materia> ListaMateria = new List<Materia>();
+
+            
+ 
+            for (int i=0; i < materias.Count ; i++)
+            {
+
+                var materiaSelected = await _context.Materia
+                .FirstOrDefaultAsync(m => m.Id == materias[i]);
+
+                ListaMateria.Add(materiaSelected);
+            }
+
+            ViewBag.grupo = grupoSelected;
+            ViewBag.estudiante = estudiante;
+            ViewBag.materia = ListaMateria;
+
+
+            //Consultar las calificaciones de un alumno
+            List<int> calificaciones = new List<int>();
+
+
+            for (int d=0; d < materias.Count; d++)
+            {
+                int calificacion = (from l in _context.Calificacion
+                                    where l.IdEstudiante == id
+                                    where l.IdMateria == materias[d]
+                                    select l.calificacion).ToList()[0];
+
+                calificaciones.Add(calificacion);
+            }
+
+            ViewBag.calificaciones = calificaciones;
+
+
+
+          
+
+
+            
+
+
+          
+
+            return View(estudiante);
+
+
+            
+
+
+
+
+        }
+
+
     }
 }
