@@ -1,7 +1,13 @@
-﻿@model IEnumerable<SistemaPrimaria.Models.Grupo>
+﻿
 
 @{
     ViewData["Title"] = "Index";
+    List<List<string>> datosGrupos = (List<List<string>>)ViewBag.datosGrupos;
+    List<int> gruposId = new List<int>();
+    foreach (var item in ViewBag.grupos)
+    {
+        gruposId.Add(item.Id);
+    }
 }
 
 <h1>Lista de grupos</h1>
@@ -22,20 +28,21 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreGrupo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdMaestro)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
-               
-            </td>
-        </tr>
-}
+        @for (int i = 0; i < datosGrupos.Count; i++)
+        {
+            <tr>
+                <td>
+                    @datosGrupos[i][0]  @* Nombre grupo*@
+                </td>
+                <td>
+                    @datosGrupos[i][1]  @* Maestro asignado*@
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@gruposId[i]">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@gruposId[i]">Eliminar</a>
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

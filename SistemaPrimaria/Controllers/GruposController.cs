@@ -22,7 +22,21 @@ namespace SistemaPrimaria.Controllers
         // GET: Grupos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Grupo.ToListAsync());
+
+            List<Grupo> grupos = await _context.Grupo.ToListAsync();
+            List<List<string>> datosGrupos = new List<List<string>>();
+            foreach (var grupo in grupos)
+            {
+                List<string> datosGrupo = new List<string>();
+                var nombreGrupo = grupo.NombreGrupo;
+                var cedula = _context.Maestro.Find(grupo.IdMaestro).Cedula;
+                datosGrupo.Add(nombreGrupo);
+                datosGrupo.Add(cedula);
+                datosGrupos.Add(datosGrupo);
+            }
+            ViewBag.datosGrupos = datosGrupos;
+            ViewBag.grupos = grupos;
+            return View();
         }
 
         // GET: Grupos/Create
