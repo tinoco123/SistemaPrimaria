@@ -31,7 +31,7 @@
             <thead>
                 <tr>
                     <th>
-                        <strong>Nombre de Materia </strong>
+                        <strong>Materia</strong>
                     </th>
                     <th>
                         <strong>Calificación</strong>
@@ -42,28 +42,26 @@
             </thead>
 
             <tbody>
-                @foreach (Materia item in ListMaterias)
+                @for (int i=0; i < ListMaterias.Count; i++)
                 {
                     <tr>
+
+
                         <td>
-                            @item.Nombre
+                            @ListMaterias[i].Nombre
                         </td>
+                        
+                        <td>
+                            @calificaciones[i]
+                        </td>
+                       
+                        
+
 
                     </tr>
                 }
-
-                @foreach (int calificacion in calificaciones)
-                {
-                    <tr>
-                        <td>
-                            @calificacion 
-                        </td>
-
-                    </tr>
-                }
-
-
-            </tbody>
+                
+                </tbody>
 
         </table>
 

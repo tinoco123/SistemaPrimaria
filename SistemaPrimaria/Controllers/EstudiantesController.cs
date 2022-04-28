@@ -227,34 +227,22 @@ namespace SistemaPrimaria.Controllers
                 return NotFound();
             }
 
+            //Consultar el grupo al que pertenece el estudiante 
 
-            //Consultar el id al que pertenece el estudiante 
-
-            var grupo = (from l in _context.GrupoEstudiante
+            int idGrupo = (from l in _context.GrupoEstudiante
                          where l.IdEstudiante == id
-                         select l.IdGrupo).ToList();
+                         select l.IdGrupo).ToList()[0];
            
-           
-                int idGrupo = grupo[0];
-           
-
-           
-
             var grupoSelected = await _context.Grupo
                 .FirstOrDefaultAsync(m => m.Id == idGrupo);
 
-          
-
-
-            //consultar las materias de un alumno
+            //Consultar las materias del alumno
             var materias = (from l in _context.GrupoMateria
                             where l.IdGrupo == idGrupo
                             select l.IdMateria).ToList();
 
             List<Materia> ListaMateria = new List<Materia>();
 
-            
- 
             for (int i=0; i < materias.Count ; i++)
             {
 
@@ -264,14 +252,8 @@ namespace SistemaPrimaria.Controllers
                 ListaMateria.Add(materiaSelected);
             }
 
-            ViewBag.grupo = grupoSelected;
-            ViewBag.estudiante = estudiante;
-            ViewBag.materia = ListaMateria;
-
-
             //Consultar las calificaciones de un alumno
             List<int> calificaciones = new List<int>();
-
 
             for (int d=0; d < materias.Count; d++)
             {
@@ -283,28 +265,13 @@ namespace SistemaPrimaria.Controllers
                 calificaciones.Add(calificacion);
             }
 
+            ViewBag.grupo = grupoSelected;
+            ViewBag.estudiante = estudiante;
+            ViewBag.materia = ListaMateria;
             ViewBag.calificaciones = calificaciones;
 
-
-
-          
-
-
-            
-
-
-          
-
-            return View(estudiante);
-
-
-            
-
-
-
+            return View();
 
         }
-
-
     }
 }
