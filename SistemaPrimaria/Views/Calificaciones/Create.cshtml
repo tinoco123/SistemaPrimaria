@@ -20,19 +20,18 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="calificacion" class="control-label"><strong>Calificación:</strong></label>
-                <input asp-for="calificacion" class="form-control" />
-                <span asp-validation-for="calificacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.DropDownList("IdEstudiante", estudiantes , "Selecciona el estudiante", new { @class = "form-control" })
-
+                @Html.DropDownList("IdEstudiante", estudiantes, "Selecciona el estudiante", new { @class = "form-control" })
                 <span asp-validation-for="IdEstudiante" class="text-danger"></span>
             </div>
             <div class="form-group">
 
-                 @Html.DropDownList("IdMateria", materias , "Selecciona la materia", new { @class = "form-control" })
+                @Html.DropDownList("IdMateria", materias, "Selecciona la materia", new { @class = "form-control" })
                 <span asp-validation-for="IdMateria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="calificacion" class="control-label"><strong>Calificación:</strong></label>
+                <input asp-for="calificacion" class="form-control" />
+                <span asp-validation-for="calificacion" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Asignar Calificación" class="btn btn-primary" />

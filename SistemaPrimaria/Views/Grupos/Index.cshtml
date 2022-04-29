@@ -24,7 +24,9 @@
             <th>
                 <strong>Maestro asignado:</strong>
             </th>
-            <th></th>
+            <th>
+                <strong>Materias:</strong>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -36,6 +38,9 @@
                 </td>
                 <td>
                     @datosGrupos[i][1]  @* Maestro asignado*@
+                </td>
+                <td>
+                    @datosGrupos[i][2]  @* Materias del grupo*@
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@gruposId[i]">Editar</a> |

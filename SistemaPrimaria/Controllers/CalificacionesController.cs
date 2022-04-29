@@ -19,17 +19,12 @@ namespace SistemaPrimaria.Controllers
             _context = context;
         }
 
-        // GET: Calificacions
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.Calificacion.ToListAsync());
-        //}
-
-        
+            
 
         // GET: Calificacions/Create
         public IActionResult Create()
         {
+
             //Estudiantes
             List<EstudianteViewModel> listaEstudiantes = null;
 
@@ -86,7 +81,7 @@ namespace SistemaPrimaria.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int calificacion, int idEstudiante, int idMateria )
+        public async Task<IActionResult> Create( int idEstudiante, int idMateria,int calificacion )
         {
             //Estudiante
 

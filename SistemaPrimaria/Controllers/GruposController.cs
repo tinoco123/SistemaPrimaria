@@ -28,10 +28,25 @@ namespace SistemaPrimaria.Controllers
             foreach (var grupo in grupos)
             {
                 List<string> datosGrupo = new List<string>();
+                string listaMaterias = "";
+
                 var nombreGrupo = grupo.NombreGrupo;
                 var cedula = _context.Maestro.Find(grupo.IdMaestro).Cedula;
+                var idMaterias = (from l in _context.GrupoMateria
+                 where l.IdGrupo == grupo.Id
+                 select l.IdMateria).ToList();
+                // Traer los nombres de las materias
+                foreach (int id in idMaterias)
+                {
+                    string nombreMateria = (from l in _context.Materia
+                                            where l.Id == id
+                                            select l.Nombre).ToList()[0];
+                    listaMaterias += nombreMateria + "\n";
+                }
                 datosGrupo.Add(nombreGrupo);
                 datosGrupo.Add(cedula);
+                datosGrupo.Add(listaMaterias);
+
                 datosGrupos.Add(datosGrupo);
             }
             ViewBag.datosGrupos = datosGrupos;
