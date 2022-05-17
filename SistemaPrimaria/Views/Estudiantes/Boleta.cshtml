@@ -13,21 +13,22 @@
 
 <hr />
 
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <div>
 
-        <p>
+        <span>
 
-            <strong> Nombre Alumno </strong>
+            <strong> Nombre Alumno: </strong>
             @estudiante.Nombre @estudiante.ApellidoPaterno @estudiante.ApellidoMaterno
 
-        </p>
-        <p>
-            <strong> Grupo </strong>
+        </span>
+        <span>
+            <strong> Grupo: </strong>
             @grupo.NombreGrupo
-        </p>
+        </span>
 
-        <table class="table">
+        
+        <table class="table" style="margin-top: 1em;">
             <thead>
                 <tr>
                     <th>
@@ -42,7 +43,7 @@
             </thead>
 
             <tbody>
-                @for (int i=0; i < ListMaterias.Count; i++)
+                @for (int i = 0; i < ListMaterias.Count; i++)
                 {
                     <tr>
 
@@ -50,18 +51,18 @@
                         <td>
                             @ListMaterias[i].Nombre
                         </td>
-                        
+
                         <td>
                             @calificaciones[i]
                         </td>
-                       
-                        
+
+
 
 
                     </tr>
                 }
-                
-                </tbody>
+
+            </tbody>
 
         </table>
 
@@ -73,6 +74,6 @@
     <a asp-action="Index">Volver a la lista</a>
 </div>
 
-@section Scripts {s
+@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
