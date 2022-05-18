@@ -5,7 +5,7 @@
     List<Estudiante> ListaEstudiante = (List<Estudiante>)ViewBag.estudiantes;
     List<Materia> ListaMateria = (List<Materia>)ViewBag.materias;
     List<List<int>> calificaciones =  (List<List<int>>)ViewBag.calificaciones;
-
+    
 }
 
 
@@ -37,11 +37,19 @@
 
                       }
 
-                        
+                    <th>
+                        Promedio
+                    </th>  
                 </tr>
             </thead>
 
             <tbody>
+                @{ 
+                    int numeroAprobados = 0;
+                    int numeroReprobados = 0;
+                    double promedioMasAlto = 0.0;
+                    double promedioMasBajo = 0.0;
+                }
                 @for (int i = 0; i < ListaEstudiante.Count; i++)
                 {
                     <tr>
@@ -50,19 +58,55 @@
                         <td>
                             @ListaEstudiante[i].Nombre @ListaEstudiante[i].ApellidoPaterno @ListaEstudiante[i].ApellidoMaterno
                         </td>
-                    @for (int j = 0; j < calificaciones[i].Count; j++)
-                {
+                        @for (int j = 0; j < calificaciones[i].Count; j++)
+                        {
+                            <td>
+                                @calificaciones[i][j]
+                            </td>
+                        }
+                        @{
+                            double calculoPromedioAlumno = (Double)calificaciones[i].Sum() / calificaciones[i].Count;
+                            if (promedioMasBajo == 0)
+                            {
+                                promedioMasBajo = calculoPromedioAlumno;
+                                promedioMasAlto = calculoPromedioAlumno;
+
+                            }
+                            if (calculoPromedioAlumno >= 6)
+                            {
+                                numeroAprobados++;
+                            }
+                            else
+                            {
+                                numeroReprobados++;
+                            }
+                            if (calculoPromedioAlumno > promedioMasAlto)
+                            {
+                                promedioMasAlto = calculoPromedioAlumno;
+                            }
+                            if (calculoPromedioAlumno < promedioMasBajo)
+                            {
+                                promedioMasBajo = calculoPromedioAlumno;
+                            }
+                            string promedioAlumno = calculoPromedioAlumno.ToString();
+                        }
                         <td>
-                            @calificaciones[i][j]
+                            <p>@promedioAlumno</p>
                         </td>
-                }
-                         
                     </tr>
                 }
-
+                    
             </tbody>
 
         </table>
+    </div>
+    <div>
+        <h3>Datos del grupo:</h3>
+
+        <p><strong>Promedio mas alto:</strong> @promedioMasAlto</p>
+        <p><strong>Promedio mas bajo:</strong> @promedioMasBajo</p>
+        <p><strong>Número de aprobados:</strong> @numeroAprobados</p>
+        <p><strong>Número de reprobados:</strong> @numeroReprobados</p>
     </div>
 </div>
 
