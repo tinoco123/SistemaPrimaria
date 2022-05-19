@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaPrimaria.Data;
 using SistemaPrimaria.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SistemaPrimaria.Controllers
 {
@@ -33,8 +36,8 @@ namespace SistemaPrimaria.Controllers
                 var nombreGrupo = grupo.NombreGrupo;
                 var cedula = _context.Maestro.Find(grupo.IdMaestro).Cedula;
                 var idMaterias = (from l in _context.GrupoMateria
-                 where l.IdGrupo == grupo.Id
-                 select l.IdMateria).ToList();
+                                  where l.IdGrupo == grupo.Id
+                                  select l.IdMateria).ToList();
                 // Traer los nombres de las materias
                 foreach (int id in idMaterias)
                 {
@@ -60,11 +63,11 @@ namespace SistemaPrimaria.Controllers
             List<MaestroViewModel> listaMaestros = null;
 
             listaMaestros = (from data in _context.Maestro
-                           select new MaestroViewModel
-                           {
-                               Id = data.Id,
-                               Cedula = data.Cedula
-                           }).ToList();
+                             select new MaestroViewModel
+                             {
+                                 Id = data.Id,
+                                 Cedula = data.Cedula
+                             }).ToList();
 
 
             List<SelectListItem> maestros = listaMaestros.ConvertAll(d =>
@@ -113,9 +116,9 @@ namespace SistemaPrimaria.Controllers
 
             _context.Add(grupo);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));    
-            
-            
+            return RedirectToAction(nameof(Index));
+
+
         }
 
         // GET: Grupos/Edit/5
@@ -205,7 +208,7 @@ namespace SistemaPrimaria.Controllers
                 };
             });
 
-            
+
 
             ViewBag.materias = materias;
             ViewBag.grupo = grupo;
@@ -243,7 +246,7 @@ namespace SistemaPrimaria.Controllers
                 };
             });
 
-            
+
 
             GrupoMateria grupoMateria = new GrupoMateria();
             grupoMateria.IdGrupo = IdGrupo;
@@ -331,7 +334,7 @@ namespace SistemaPrimaria.Controllers
 
             //Consultar las calificaciones de un alumno
             List<List<int>> calificaciones = new List<List<int>>();
-            
+
 
             for (int i = 0; i < estudiantes.Count; i++)
             {
@@ -347,13 +350,119 @@ namespace SistemaPrimaria.Controllers
                 }
                 calificaciones.Add(calificacionesPorEstudiante);
             }
-            
+
 
 
             ViewBag.grupo = grupo;
             ViewBag.estudiantes = ListaEstudiante;
             ViewBag.materias = ListaMateria;
             ViewBag.calificaciones = calificaciones;
+            DataTable dt = GetDataTable(ListaMateria, ListaEstudiante, calificaciones);
+            return View();
+        }
+
+        public DataTable GetDataTable(List<Materia> ListaMateria,
+                                      List<Estudiante> ListaEstudiante,
+                                      List<List<int>> calificaciones)
+        {
+
+            // Titulos
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Estudiantes");
+            foreach (Materia materia in ListaMateria)
+            {
+                dt.Columns.Add(materia.Nombre);
+            }
+            dt.Columns.Add("Promedio");
+
+            //Rows
+            for (int i = 0; i < ListaEstudiante.Count; i++){
+                DataRow dataRow = dt.NewRow();
+                // Nombre del estudiante
+                dataRow[dt.Columns["Estudiantes"]] = ListaEstudiante[i].Nombre + " "  + ListaEstudiante[i].ApellidoPaterno + " " + ListaEstudiante[i].ApellidoMaterno;
+                // Calificaciones
+                for (int j = 0; j < dt.Columns.Count - 2; j++)
+                {
+                    dataRow[dt.Columns[j + 1]] = calificaciones[i][j];
+                }
+                dataRow["Promedio"] = (Double) calificaciones[i].Sum()/calificaciones[i].Count;
+                dt.Rows.Add(dataRow);
+            }
+            
+            return dt;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReportePorGrupo(int idGrupo)
+        {
+            //Consultar las estudiantes del grupo
+            var estudiantes = (from l in _context.GrupoEstudiante
+                               where l.IdGrupo == idGrupo
+                               select l.IdEstudiante).ToList();
+
+            List<Estudiante> ListaEstudiante = new List<Estudiante>();
+
+            for (int i = 0; i < estudiantes.Count; i++)
+            {
+
+                var estudianteSelected = await _context.Estudiante
+                .FirstOrDefaultAsync(m => m.Id == estudiantes[i]);
+
+                ListaEstudiante.Add(estudianteSelected);
+            }
+
+            //Consultar las materias del alumno
+            var materias = (from l in _context.GrupoMateria
+                            where l.IdGrupo == idGrupo
+                            select l.IdMateria).ToList();
+
+            List<Materia> ListaMateria = new List<Materia>();
+
+            for (int i = 0; i < materias.Count; i++)
+            {
+
+                var materiaSelected = await _context.Materia
+                .FirstOrDefaultAsync(m => m.Id == materias[i]);
+
+                ListaMateria.Add(materiaSelected);
+            }
+
+            //Consultar las calificaciones de un alumno
+            List<List<int>> calificaciones = new List<List<int>>();
+
+
+            for (int i = 0; i < estudiantes.Count; i++)
+            {
+                List<int> calificacionesPorEstudiante = new List<int>();
+                for (int d = 0; d < materias.Count; d++)
+                {
+                    int calificacion = (from l in _context.Calificacion
+                                        where l.IdEstudiante == estudiantes[i]
+                                        where l.IdMateria == materias[d]
+                                        select l.calificacion).ToList()[0];
+
+                    calificacionesPorEstudiante.Add(calificacion);
+                }
+                calificaciones.Add(calificacionesPorEstudiante);
+            }
+
+
+            DataTable dt = GetDataTable(ListaMateria, ListaEstudiante, calificaciones);
+            dt.TableName = "Reporte por grupo";
+
+            using (XLWorkbook libro = new XLWorkbook())
+            {
+                var hoja = libro.Worksheets.Add(dt);
+
+                hoja.ColumnsUsed().AdjustToContents();
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    libro.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Reporte_Por_Grupo" + DateTime.Now.ToString() + ".xlsx");
+                }
+            }
             return View();
         }
 

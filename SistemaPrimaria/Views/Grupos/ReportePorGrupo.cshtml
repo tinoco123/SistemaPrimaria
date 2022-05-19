@@ -13,13 +13,17 @@
 <h1>Reporte grupo</h1>
 <hr />
 <div>
-    <div style="margin-bottom:1em;">
-        <span>
+    <div style="margin-bottom:1em; display:inline-block;">
+        <p>
 
             <strong> Grupo: </strong>
             @grupo.NombreGrupo
 
-        </span>
+        </p>
+        <form asp-action="ReportePorGrupo" method="post">
+            <input hidden  value="@grupo.Id" name="idGrupo" />
+            <button class="btn btn-success" type="submit">Transformar a hoja de cálculo</button>
+        </form>
     </div>
     <div>
         <table class="table" >
