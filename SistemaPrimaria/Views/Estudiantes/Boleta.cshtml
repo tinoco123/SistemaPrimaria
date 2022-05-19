@@ -15,7 +15,12 @@
 
 <div>
     <div>
-
+        <div>
+            <form asp-action="Boleta" method="post">
+                <input hidden value="@estudiante.Id" name="idEstudiante" />
+                <button class="btn btn-success" type="submit">Generar PDF</button>
+            </form>
+        </div>
         <span>
 
             <strong> Nombre Alumno: </strong>

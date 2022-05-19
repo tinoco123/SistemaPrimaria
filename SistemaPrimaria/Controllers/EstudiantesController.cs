@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaPrimaria.Data;
 using SistemaPrimaria.Models;
+using System.IO;
 
 namespace SistemaPrimaria.Controllers
 {
@@ -273,5 +277,93 @@ namespace SistemaPrimaria.Controllers
             return View();
 
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Boleta(int idEstudiante)
+        {
+
+            //Consultar el grupo al que pertenece el estudiante 
+
+            int idGrupo = (from l in _context.GrupoEstudiante
+                           where l.IdEstudiante == idEstudiante
+                           select l.IdGrupo).ToList()[0];
+
+            var grupoSelected = await _context.Grupo
+                .FirstOrDefaultAsync(m => m.Id == idGrupo);
+
+            //Consultar las materias del alumno
+            var materias = (from l in _context.GrupoMateria
+                            where l.IdGrupo == idGrupo
+                            select l.IdMateria).ToList();
+
+            List<Materia> ListaMateria = new List<Materia>();
+
+            for (int i = 0; i < materias.Count; i++)
+            {
+
+                var materiaSelected = await _context.Materia
+                .FirstOrDefaultAsync(m => m.Id == materias[i]);
+
+                ListaMateria.Add(materiaSelected);
+            }
+
+            //Consultar las calificaciones de un alumno
+            List<int> calificaciones = new List<int>();
+
+            for (int d = 0; d < materias.Count; d++)
+            {
+                int calificacion = (from l in _context.Calificacion
+                                    where l.IdEstudiante == idEstudiante
+                                    where l.IdMateria == materias[d]
+                                    select l.calificacion).ToList()[0];
+
+                calificaciones.Add(calificacion);
+            }
+            MemoryStream ms = new MemoryStream();
+            Document document = new Document(iTextSharp.text.PageSize.LETTER, 0, 0, 0, 0);
+            PdfWriter pw = PdfWriter.GetInstance(document, ms);
+            document.Open();
+            PdfPTable table = new PdfPTable(2);
+            table.AddCell(new PdfPCell(new Phrase("Materias")));
+            table.AddCell(new PdfPCell(new Phrase("Calificaciones")));
+            for(int i =0; i<ListaMateria.Count; i++)
+            {
+                table.AddCell(new PdfPCell(new Phrase(ListaMateria[i].Nombre)));
+                table.AddCell(new PdfPCell(new Phrase(calificaciones[i].ToString())));
+
+            }
+            document.Add(table);
+            // Close the document  
+            document.Close();
+            // Close the writer instance  
+            pw.Close();
+
+            byte[] byteStream = ms.ToArray();
+            ms = new MemoryStream();
+            ms.Write(byteStream, 0, byteStream.Length);
+            ms.Position = 0;
+            return new FileStreamResult(ms,"application/pdf");
+
+        }
+        public DataTable GetDataTable(List<Materia> ListaMateria, List<int> calificaciones)
+        {
+            DataTable dt = new DataTable();
+            // Headers
+            dt.Columns.Add("Materia");
+            dt.Columns.Add("Calificacion");
+            //Rows
+            for (int i = 0; i < ListaMateria.Count; i++)
+            {
+                DataRow dataRow = dt.NewRow();
+                dataRow["Materia"] = ListaMateria[i].Nombre;
+                dataRow["Calificacion"] = calificaciones[i];
+            }
+            return dt;
+        }
+
+        
     }
+
+   
 }
