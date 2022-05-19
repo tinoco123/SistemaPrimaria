@@ -322,8 +322,32 @@ namespace SistemaPrimaria.Controllers
             }
             MemoryStream ms = new MemoryStream();
             Document document = new Document(iTextSharp.text.PageSize.LETTER, 0, 0, 0, 0);
+            document.SetPageSize(iTextSharp.text.PageSize.A4);
             PdfWriter pw = PdfWriter.GetInstance(document, ms);
             document.Open();
+           
+            BaseFont bfntHead = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            iTextSharp.text.Font fntHead = new iTextSharp.text.Font(bfntHead, 16, 1, iTextSharp.text.BaseColor.BLUE);
+            Paragraph prgHeading = new Paragraph();
+            prgHeading.Alignment = Element.ALIGN_CENTER;
+            prgHeading.Add(new Chunk("Boleta de calificaciones".ToUpper(), fntHead));
+            document.Add(prgHeading);
+
+            Paragraph prgGeneratedBY = new Paragraph();
+            BaseFont btnAuthor = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            iTextSharp.text.Font fntAuthor = new iTextSharp.text.Font(btnAuthor, 8, 2, iTextSharp.text.BaseColor.BLUE);
+            prgGeneratedBY.Alignment = Element.ALIGN_RIGHT;
+            prgGeneratedBY.Add(new Chunk("Reporte Generatedo por : Sistema Primaria", fntAuthor));  
+            prgGeneratedBY.Add(new Chunk("\nGenerado : " + DateTime.Now.ToShortDateString(), fntAuthor));  
+            document.Add(prgGeneratedBY);
+
+            //Adding a line  
+            Paragraph p = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, iTextSharp.text.BaseColor.BLACK, Element.ALIGN_LEFT, 1)));
+            document.Add(p);
+
+            //Adding line break  
+            document.Add(new Chunk("\n", fntHead));
+
             PdfPTable table = new PdfPTable(2);
             table.AddCell(new PdfPCell(new Phrase("Materias")));
             table.AddCell(new PdfPCell(new Phrase("Calificaciones")));
